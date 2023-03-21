@@ -1,10 +1,12 @@
-import { AttachFile, InsertEmoticon, Mic, MoreVert } from "@mui/icons-material";
+import MoreVert from "@mui/icons-material/MoreVert";
+import Mic from "@mui/icons-material/Mic";
+import InsertEmoticon from "@mui/icons-material/InsertEmoticon";
+import AttachFile from "@mui/icons-material/AttachFile";
 import { Avatar, IconButton } from "@mui/material";
 import {
   addDoc,
   collection,
   doc,
-  getDoc,
   orderBy,
   query,
   serverTimestamp,
@@ -94,14 +96,14 @@ const ChatScreen = ({ chat, messages }) => {
 
   return (
     <>
-      <div className="sticky bg-white z-50 top-0 flex p-4 border-b border-slate-100 h-20 items-center">
+      <div className="sticky top-0 z-50 flex items-center h-20 p-4 bg-white border-b border-slate-100">
         {receiver ? (
           <Avatar src={receiver?.photoURL} />
         ) : (
           <Avatar>{receiverEmail[0]}</Avatar>
         )}
-        <div className="ml-4 flex-1">
-          <h3 className="font-medium text-lg mb-1">{receiverEmail}</h3>
+        <div className="flex-1 ml-4">
+          <h3 className="mb-1 text-lg font-medium">{receiverEmail}</h3>
           {receiverSnapshot ? (
             <p className="text-sm text-gray-400">
               Last Active:{" "}
@@ -128,13 +130,13 @@ const ChatScreen = ({ chat, messages }) => {
         {showMessages()}
         <div ref={endOfMessagesRef}></div>
       </div>
-      <form className="flex sticky bottom-0 p-3 items-center bg-white z-50">
+      <form className="sticky bottom-0 z-50 flex items-center p-3 bg-white">
         <InsertEmoticon />
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          className="flex-1 outline-none border-none rounded-xl bg-gray-100 p-5 mx-4"
+          className="flex-1 p-5 mx-4 bg-gray-100 border-none outline-none rounded-xl"
         />
         <Mic />
         <button hidden disabled={!input} type="submit" onClick={sendMessage}>
