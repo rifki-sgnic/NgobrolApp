@@ -11,7 +11,7 @@ module.exports = {
   theme: {
     minWidth: {
       "1/2": "50%",
-      64: "64px",
+      68: "68px",
     },
     extend: {},
   },

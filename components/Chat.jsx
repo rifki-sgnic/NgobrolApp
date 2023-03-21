@@ -1,10 +1,11 @@
-import { Avatar } from "@mui/material";
+import { Avatar, Badge } from "@mui/material";
 import { collection, query, where } from "firebase/firestore";
 import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useCollection } from "react-firebase-hooks/firestore";
 import { auth, db } from "../firebase";
 import getReceiverEmail from "../utils/getReceiverEmail";
+import VerifiedIcon from "@mui/icons-material/Verified";
 
 const Chat = ({ id, users }) => {
   const router = useRouter();
@@ -23,15 +24,25 @@ const Chat = ({ id, users }) => {
 
   return (
     <div
-      className="flex items-center cursor-pointer p-4 break-words hover:bg-gray-100"
+      className="flex items-center p-4 break-words border-b border-gray-100 cursor-pointer hover:bg-gray-100"
       onClick={enterChat}
     >
       {receiver ? (
-        <Avatar src={receiver?.photoURL} className="m-1 mr-4" />
+        receiver?.email === "mrifki028@gmail.com" ? (
+          <Badge
+            overlap="circular"
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            badgeContent={<VerifiedIcon className="text-sky-500" />}
+          >
+            <Avatar src={receiver?.photoURL} className="m-1" />
+          </Badge>
+        ) : (
+          <Avatar src={receiver?.photoURL} className="m-1" />
+        )
       ) : (
-        <Avatar className="m-1 mr-4">{receiverEmail[0]}</Avatar>
+        <Avatar className="m-1">{receiverEmail[0]}</Avatar>
       )}
-      <p>{receiverEmail}</p>
+      <p className="ml-3">{receiverEmail}</p>
     </div>
   );
 };

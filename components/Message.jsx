@@ -2,12 +2,13 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
 
 const MessageElement = ({ children, type }) => {
-  let className = "w-fit p-4 rounded-lg m-3 min-w-64 pb-6 relative text-right";
+  let className =
+    "relative max-w-xs p-4 pb-6 m-3 break-words rounded-lg w-fit min-w-68";
   if (type === "Sender") {
-    className = `${className} ml-auto bg-sky-300`;
+    className = `${className} ml-auto bg-sky-300 rounded-br-none`;
   }
   if (type === "Receiver") {
-    className = `${className} text-left bg-gray-100`;
+    className = `${className} bg-gray-100 rounded-bl-none`;
   }
   return <p className={className}>{children}</p>;
 };
@@ -21,7 +22,7 @@ const Message = ({ user, message }) => {
     <div>
       <MessageElement type={TypeOfMessage}>
         {message.message}
-        <span className="text-gray-800 p-2 font-light text-xs absolute bottom-0 right-0 text-right">
+        <span className="absolute bottom-0 right-0 p-2 text-xs font-light text-right text-gray-800">
           {message.timestamp
             ? new Date(message.timestamp).toLocaleTimeString("id-ID", {
                 hour12: true,

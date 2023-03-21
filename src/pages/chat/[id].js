@@ -7,7 +7,7 @@ import {
   query,
 } from "firebase/firestore";
 import Head from "next/head";
-import React from "react";
+import { useRouter } from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import ChatScreen from "../../../components/ChatScreen";
 import Sidebar from "../../../components/Sidebar";
@@ -16,14 +16,15 @@ import getReceiverEmail from "../../../utils/getReceiverEmail";
 
 const Chat = ({ messages, chat }) => {
   const [user] = useAuthState(auth);
+  const router = useRouter();
 
   return (
     <div className="flex">
       <Head>
         <title>Chat with {getReceiverEmail(chat.users, user)}</title>
       </Head>
-      <Sidebar />
-      <div className="flex-1 overflow-y-auto scrollbar-hide h-screen">
+      {router.pathname === "/" ? <Sidebar /> : <Sidebar hidden />}
+      <div className="flex-1 h-screen overflow-y-auto scrollbar-hide">
         <ChatScreen chat={chat} messages={messages} />
       </div>
     </div>

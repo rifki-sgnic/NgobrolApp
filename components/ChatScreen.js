@@ -1,8 +1,10 @@
-import MoreVert from "@mui/icons-material/MoreVert";
-import Mic from "@mui/icons-material/Mic";
-import InsertEmoticon from "@mui/icons-material/InsertEmoticon";
 import AttachFile from "@mui/icons-material/AttachFile";
-import { Avatar, IconButton } from "@mui/material";
+import InsertEmoticon from "@mui/icons-material/InsertEmoticon";
+import Mic from "@mui/icons-material/Mic";
+import MoreVert from "@mui/icons-material/MoreVert";
+import ArrowBack from "@mui/icons-material/ArrowBack";
+import VerifiedIcon from "@mui/icons-material/Verified";
+import { Avatar, Badge, IconButton } from "@mui/material";
 import {
   addDoc,
   collection,
@@ -67,6 +69,10 @@ const ChatScreen = ({ chat, messages }) => {
     scrollToBottom();
   }
 
+  const backToChatList = () => {
+    router.replace("/");
+  };
+
   const sendMessage = (e) => {
     e.preventDefault();
     setDoc(
@@ -97,15 +103,35 @@ const ChatScreen = ({ chat, messages }) => {
   return (
     <>
       <div className="sticky top-0 z-50 flex items-center h-20 p-4 bg-white border-b border-slate-100">
-        {receiver ? (
-          <Avatar src={receiver?.photoURL} />
-        ) : (
-          <Avatar>{receiverEmail[0]}</Avatar>
-        )}
-        <div className="flex-1 ml-4">
-          <h3 className="mb-1 text-lg font-medium">{receiverEmail}</h3>
+        <IconButton
+          className="flex gap-x-2 rounded-3xl"
+          onClick={backToChatList}
+        >
+          <ArrowBack />
+          {receiver ? (
+            receiver?.email === "mrifki028@gmail.com" ? (
+              <Badge
+                overlap="circular"
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                badgeContent={
+                  <VerifiedIcon className="mt-1 ml-1 text-sky-500" />
+                }
+              >
+                <Avatar src={receiver?.photoURL} />
+              </Badge>
+            ) : (
+              <Avatar src={receiver?.photoURL} />
+            )
+          ) : (
+            <Avatar>{receiverEmail[0]}</Avatar>
+          )}
+        </IconButton>
+        <div className="flex-1 ml-2 lg:ml-4">
+          <h3 className="mb-1 text-base font-medium lg:text-lg">
+            {receiverEmail}
+          </h3>
           {receiverSnapshot ? (
-            <p className="text-sm text-gray-400">
+            <p className="text-xs text-gray-400 lg:text-sm">
               Last Active:{" "}
               {receiver?.lastSeen?.toDate() ? (
                 <TimeAgo datetime={receiver?.lastSeen?.toDate()} />
@@ -126,7 +152,7 @@ const ChatScreen = ({ chat, messages }) => {
           </IconButton>
         </div>
       </div>
-      <div className="p-8 bg-slate-600" style={{ minHeight: "83vh" }}>
+      <div className="p-8 bg-sky-800" style={{ minHeight: "83vh" }}>
         {showMessages()}
         <div ref={endOfMessagesRef}></div>
       </div>
